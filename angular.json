@@ -123,6 +123,50 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-social-links"
+    },
+    "NgSocialLinks": {
+      "projectType": "library",
+      "root": "projects/ng-social-links",
+      "sourceRoot": "projects/ng-social-links/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-social-links/tsconfig.lib.json",
+            "project": "projects/ng-social-links/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-social-links/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-social-links/src/test.ts",
+            "tsConfig": "projects/ng-social-links/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-social-links/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-social-links/tsconfig.lib.json",
+              "projects/ng-social-links/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ng-social-links",
+  "cli": {
+    "analytics": "fc9ed4b2-388e-4d23-8e76-64823ffee2c1"
+  }
 }
