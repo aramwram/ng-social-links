@@ -12,7 +12,5 @@ export class AppComponent {
 
   fbLink = this.socialLinks.getSocialLink(NgSocialLinksProvider.Facebook);
 
-  constructor(private socialLinks: NgSocialLinksService) {
-    console.log(this.fbLink);
-  }
+  constructor(private socialLinks: NgSocialLinksService) {}
 }
