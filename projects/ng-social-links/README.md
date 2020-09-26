@@ -1,24 +1,84 @@
-# NgSocialLinks
+# Description
+Headless social share for Angular. Provides straightforward API for getting social share URLs which can be used in your templates.
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+[![npm version](https://badge.fury.io/js/ng-social-links.svg)](https://badge.fury.io/js/ng-social-links)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/aramwram/ng-social-links/blob/master/LICENSE.md)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-## Code scaffolding
+ng-social-links advantages:
+ * Native to Angular.
+ * Configurable - you can globally define share URL, text and email body at module import.
+ * Well typed - it's clear which parameters are relevant to every social share provider.
+ * Works well in SSR mode.
 
-Run `ng generate component component-name --project NgSocialLinks` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project NgSocialLinks`.
-> Note: Don't forget to add `--project NgSocialLinks` or else it will be added to the default project in your `angular.json` file. 
+# Usage
+Install package
+```sh
+npm i ng-social-links
+```
+Add import to your module
+```js
+import { NgSocialLinksModule } from 'ng-social-links';
 
-## Build
+@NgModule({
+  imports: [
+    ...
+    NgSocialLinksModule.forRoot(),
+    ],
+  declarations: [],
+  providers: []
+})
+```
+Inject the service:
+```js
+import { NgSocialLinksService } from 'ng-social-links';
 
-Run `ng build NgSocialLinks` to build the project. The build artifacts will be stored in the `dist/` directory.
+class SomeComponent {
+  constructor(private socialLinks: NgSocialLinksService) {}
+}
+````
+Get the socail share link:
+```js
+facebookShareLink = this.socialLinks.getSocialLink('fa');
+```
+With additional parameters:
+```js
+twitterShareLink = this.socialLinks.getSocialLink('tw', { text: 'Visit my website!' });
+```
 
-## Publishing
+## Configuration
+The configuration interface looks like this:
+```js
+interface Config {
+  url?: string;
+  text?: string;
+  body?: string;
+}
+```
+By default `document.location.href` is used for `url`, `text` and `body` are empty.
 
-After building your library with `ng build NgSocialLinks`, go to the dist folder `cd dist/ng-social-links` and run `npm publish`.
+You can define another defaults as follows:
+```js
+NgSocialLinksModule.forRoot({ url: 'htts://my-website.com' })
+```
+Or
+```js
+NgSocialLinksModule.forRoot({ text: 'Visit my website!', body: 'Default email body...' })
+```
 
-## Running unit tests
+ng-social-links is headless, so you're free to use whatever you like in a template. e.g. text links, icons, buttons, you name it. For example:
+```html
+<a [attr.href]="facebookShareLink">
+  <fa-icon [icon]="faFacebook"></fa-icon>
+</a>
+```
 
-Run `ng test NgSocialLinks` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Demo
+Currently, demo is only available on localhost:
+ * Clone the GitHub repo.
+ * Install dependencies: `npm install`.
+ * Run the demo website: `npm start`.
+ * Open your browser at http://localhost:4200.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Contributig to ng-social-links
+You more than welcome to improve this library (for example, add missing social share providers) or create issues on the GitHub issue tracker.
