@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { NgSocialLinksService } from './ng-social-links.service';
 import { DEFAULT_SHARE_URL_CONFIG_TOKEN } from './ng-social-links.tokens';
-import { NgSocialLinksProvider } from './ng-social-links.types';
 
 const LOCAL_URL = 'http://localhost:9876';
 const DEFAULT_URL = 'http://default-domain.com';
@@ -26,25 +25,25 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should use current localtion as a share link', () => {
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Facebook)
+      service.getSocialLink('fb')
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${LOCAL_URL}/context.html`
     );
 
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Twitter)
+      service.getSocialLink('tw')
     ).toEqual(
       `https://twitter.com/intent/tweet?url=${LOCAL_URL}/context.html`
     );
 
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Linkedin)
+      service.getSocialLink('li')
     ).toEqual(
       `https://www.linkedin.com/sharing/share-offsite/?url=${LOCAL_URL}/context.html`
     );
 
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Mailto)
+      service.getSocialLink('mt')
     ).toEqual(
       `mailto:?body= ${LOCAL_URL}/context.html`
     );
@@ -52,15 +51,15 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Facebook, { link: TEST_URL })
+      service.getSocialLink('fb', { url: TEST_URL })
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${TEST_URL}`
     );
 
     expect(
       service.getSocialLink(
-        NgSocialLinksProvider.Twitter,
-        { link: TEST_URL, text: TEST_TEXT }
+        'tw',
+        { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
       `https://twitter.com/intent/tweet?url=${TEST_URL}&text=${TEST_TEXT}`
@@ -68,8 +67,8 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        NgSocialLinksProvider.Linkedin,
-        { link: TEST_URL, text: TEST_TEXT }
+        'li',
+        { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
       `https://www.linkedin.com/sharing/share-offsite/?url=${TEST_URL}/&summary=${TEST_TEXT}`
@@ -77,8 +76,8 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        NgSocialLinksProvider.Mailto,
-        { link: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
+        'mt',
+        { url: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
       )
     ).toEqual(
       `mailto:?subject=${TEST_TEXT}&body=${TEST_BODY} ${TEST_URL}`
@@ -93,7 +92,7 @@ describe('NgSocialLinksService [specific default configuration]', () => {
     TestBed.configureTestingModule({
       providers: [{
         provide: DEFAULT_SHARE_URL_CONFIG_TOKEN,
-        useValue: { link: DEFAULT_URL, text: 'Default text', body: 'Default body' }
+        useValue: { url: DEFAULT_URL, text: 'Default text', body: 'Default body' }
       }]
     });
     service = TestBed.inject(NgSocialLinksService);
@@ -105,25 +104,25 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should use current default share link provided in module configuration', () => {
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Facebook)
+      service.getSocialLink('fb')
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${DEFAULT_URL}`
     );
 
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Twitter)
+      service.getSocialLink('tw')
     ).toEqual(
       `https://twitter.com/intent/tweet?url=${DEFAULT_URL}&text=Default text`
     );
 
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Linkedin)
+      service.getSocialLink('li')
     ).toEqual(
       `https://www.linkedin.com/sharing/share-offsite/?url=${DEFAULT_URL}/&summary=Default text`
     );
 
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Mailto)
+      service.getSocialLink('mt')
     ).toEqual(
       `mailto:?subject=Default text&body=Default body ${DEFAULT_URL}`
     );
@@ -131,15 +130,15 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink(NgSocialLinksProvider.Facebook, { link: TEST_URL })
+      service.getSocialLink('fb', { url: TEST_URL })
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${TEST_URL}`
     );
 
     expect(
       service.getSocialLink(
-        NgSocialLinksProvider.Twitter,
-        { link: TEST_URL, text: TEST_TEXT }
+        'tw',
+        { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
       `https://twitter.com/intent/tweet?url=${TEST_URL}&text=${TEST_TEXT}`
@@ -147,8 +146,8 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        NgSocialLinksProvider.Linkedin,
-        { link: TEST_URL, text: TEST_TEXT }
+        'li',
+        { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
       `https://www.linkedin.com/sharing/share-offsite/?url=${TEST_URL}/&summary=${TEST_TEXT}`
@@ -156,8 +155,8 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        NgSocialLinksProvider.Mailto,
-        { link: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
+        'mt',
+        { url: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
       )
     ).toEqual(
       `mailto:?subject=${TEST_TEXT}&body=${TEST_BODY} ${TEST_URL}`

@@ -1,12 +1,11 @@
-export enum NgSocialLinksProvider {
-  Facebook = 'fb',
-  Twitter = 'tw',
-  Linkedin = 'li',
-  Mailto = 'mt'
-}
+export type NgSocialLinksProvider =
+  'fb' | // Facebook
+  'tw' | // Twitter
+  'li' | // Linkedin
+  'mt';  // Mailto
 
 export interface NgSocialLinksProviderConfig {
-  link: string;
+  url?: string;
   text?: string;
   body?: string;
 }

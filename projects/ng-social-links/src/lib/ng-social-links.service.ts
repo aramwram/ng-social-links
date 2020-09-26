@@ -16,39 +16,39 @@ export class NgSocialLinksService {
     @Inject(DEFAULT_SHARE_URL_CONFIG_TOKEN) private defaultConfig: Config
   ) {}
 
-  getSocialLink(provider: NgSocialLinksProvider.Facebook, config?: Pick<Config, 'link'>): string;
+  getSocialLink(provider: 'fb', config?: Pick<Config, 'url'>): string;
   getSocialLink(
-    provider: NgSocialLinksProvider.Twitter | NgSocialLinksProvider.Linkedin,
-    config?: Pick<Config, 'link' | 'text'>
+    provider: 'tw' | 'li',
+    config?: Pick<Config, 'url' | 'text'>
   ): string;
-  getSocialLink(provider: NgSocialLinksProvider.Mailto, config?: Config): string;
+  getSocialLink(provider: 'mt', config?: Config): string;
   getSocialLink(provider: NgSocialLinksProvider, config?: Partial<Config>): string {
-    const link = config?.link || this.defaultConfig.link || this.document.location.href;
+    const url = config?.url || this.defaultConfig.url || this.document.location.href;
     const text = config?.text || this.defaultConfig.text;
     const body = config?.body || this.defaultConfig.body;
 
-    if (!link) {
-      throw new Error('Mandatory parameter is missing: link.');
+    if (!url) {
+      throw new Error('Mandatory parameter is missing: url.');
     }
 
     switch (provider) {
-      case NgSocialLinksProvider.Facebook:
-        return 'https://www.facebook.com/sharer/sharer.php?u=' + link;
+      case 'fb':
+        return 'https://www.facebook.com/sharer/sharer.php?u=' + url;
 
-      case NgSocialLinksProvider.Twitter:
-        return 'https://twitter.com/intent/tweet?url=' + link + (text ? '&text=' + text : '');
+      case 'tw':
+        return 'https://twitter.com/intent/tweet?url=' + url + (text ? '&text=' + text : '');
 
-      case NgSocialLinksProvider.Linkedin:
-        return 'https://www.linkedin.com/sharing/share-offsite/?url=' + link + (text ? '/&summary=' + text : '');
+      case 'li':
+        return 'https://www.linkedin.com/sharing/share-offsite/?url=' + url + (text ? '/&summary=' + text : '');
 
-      case NgSocialLinksProvider.Mailto:
+      case 'mt':
         return (
           'mailto:' +
           (text ? '?subject=' + text : '') +
           (text ? '&body=' : '?body=') +
           (body ? body : '') +
           ' ' +
-          link
+          url
         );
 
       default:
