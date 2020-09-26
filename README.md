@@ -80,5 +80,11 @@ Currently, demo is only available on localhost:
  * Run the demo website: `npm start`.
  * Open your browser at http://localhost:4200.
 
+# Supported providers
+* 'fb' - Facebook
+* 'tw' - Twitter
+* 'li' - LinkedIn
+* 'mt' - Mailto
+
 # Contributig to ng-social-links
 You more than welcome to improve this library (for example, add missing social share providers) or create issues on the GitHub issue tracker.
