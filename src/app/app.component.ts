@@ -99,7 +99,7 @@ export class AppComponent implements OnDestroy {
       'xi'
     ].map(
       provider => ({
-        url: this.socialLinksSvc.getSocialLink(provider as any, config),
+        url: this.socialLinksSvc.getShareLink(provider as any, config),
         icon: this.faIcons[provider]
       })
     );

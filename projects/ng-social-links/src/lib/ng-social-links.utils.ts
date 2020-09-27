@@ -9,7 +9,7 @@ import { Providers, ProfilerUrls } from './ng-social-links.constants';
  * @param provider Provider name.
  * @param config Parameters used to build a social share URL.
  */
-export function getSocialLink(provider: NgSocialLinksProvider, config: Partial<Config>): string {
+export function getShareLink(provider: NgSocialLinksProvider, config: Partial<Config>): string {
   let { url, title, description } = config;
 
   if (!url) {
@@ -59,7 +59,7 @@ export function getSocialLink(provider: NgSocialLinksProvider, config: Partial<C
       return `${ProfilerUrls.skype}?url=${url}&source=button` + (title ? `&text=${title}` : '');
 
     case Providers.whatsapp:
-      return `${ProfilerUrls.whatsapp}?text=${url}%20` + (title || '');
+      return `${ProfilerUrls.whatsapp}?text=${url}` + encodeURIComponent(' ') + (title || '');
 
     case Providers.connectOk:
       const shareUrlParam = 'st.cmd=WidgetSharePreview&service=odnoklassniki&st.shareUrl';

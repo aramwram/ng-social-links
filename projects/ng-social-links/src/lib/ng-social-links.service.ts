@@ -24,14 +24,14 @@ export class NgSocialLinksService {
    * @param provider Provider name.
    * @param config Parameters used to build a social share URL.
    */
-  getSocialLink(
+  getShareLink(
     provider:
       typeof Providers.facebook  |
       typeof Providers.reddit    |
       typeof Providers.connectOk,
     config?: Pick<Config, 'url'>
   ): string;
-  getSocialLink(
+  getShareLink(
     provider:
       typeof Providers.twitter   |
       typeof Providers.linkedin  |
@@ -45,12 +45,12 @@ export class NgSocialLinksService {
       typeof Providers.xing,
     config?: Pick<Config, 'url' | 'title'>
   ): string;
-  getSocialLink(provider: typeof Providers.mailto, config?: Config): string;
-  getSocialLink(provider: NgSocialLinksProvider, config?: Partial<Config>): string {
+  getShareLink(provider: typeof Providers.mailto, config?: Config): string;
+  getShareLink(provider: NgSocialLinksProvider, config?: Partial<Config>): string {
     const url = config?.url || this.defaultConfig.url || this.document.location.origin;
     const title = config?.title || this.defaultConfig.title;
     const description = config?.description || this.defaultConfig.description;
 
-    return utils.getSocialLink(provider, { url, title, description });
+    return utils.getShareLink(provider, { url, title, description });
   }
 }

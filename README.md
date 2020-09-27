@@ -39,11 +39,11 @@ class SomeComponent {
 ````
 Get the socail share links:
 ```js
-facebookShareLink = this.socialLinks.getSocialLink('fa');
+facebookShareLink = this.socialLinks.getShareLink('fa');
 ```
 With additional parameters:
 ```js
-twitterShareLink = this.socialLinks.getSocialLink('tw', { text: 'Visit my website!' });
+twitterShareLink = this.socialLinks.getShareLink('tw', { text: 'Visit my website!' });
 ```
 
 ## Configuration
@@ -71,6 +71,13 @@ ng-social-links is headless, so you're free to use whatever you like in a templa
 <a [attr.href]="facebookShareLink">
   <fa-icon [icon]="faFacebook"></fa-icon>
 </a>
+```
+Another option is to create a popup window:
+```js
+const telegramLink = facebookShareLink = this.socialLinks.getShareLink('tg');
+
+
+window.open(telegramLink,'SocialSharePopup','width=600,height=600');
 ```
 
 # Demo

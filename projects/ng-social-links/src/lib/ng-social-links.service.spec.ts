@@ -28,25 +28,25 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should use current localtion as a share link', () => {
     expect(
-      service.getSocialLink(Providers.facebook)
+      service.getShareLink(Providers.facebook)
     ).toEqual(
       `${ProfilerUrls.facebook}?u=${encodeURIComponent(LOCAL_URL)}`
     );
 
     expect(
-      service.getSocialLink(Providers.twitter)
+      service.getShareLink(Providers.twitter)
     ).toEqual(
       `${ProfilerUrls.twitter}?url=${encodeURIComponent(LOCAL_URL)}`
     );
 
     expect(
-      service.getSocialLink(Providers.linkedin)
+      service.getShareLink(Providers.linkedin)
     ).toEqual(
       `${ProfilerUrls.linkedin}?url=${encodeURIComponent(LOCAL_URL)}`
     );
 
     expect(
-      service.getSocialLink(Providers.mailto)
+      service.getShareLink(Providers.mailto)
     ).toEqual(
       `${ProfilerUrls.mailto}?body= ${encodeURIComponent(LOCAL_URL)}`
     );
@@ -54,13 +54,13 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink(Providers.facebook, { url: TEST_URL })
+      service.getShareLink(Providers.facebook, { url: TEST_URL })
     ).toEqual(
       `${ProfilerUrls.facebook}?u=${encodeURIComponent(TEST_URL)}`
     );
 
     expect(
-      service.getSocialLink(
+      service.getShareLink(
         Providers.twitter,
         { url: TEST_URL, title: TEST_TITLE }
       )
@@ -69,7 +69,7 @@ describe('NgSocialLinksService [no default configuration]', () => {
     );
 
     expect(
-      service.getSocialLink(
+      service.getShareLink(
         Providers.linkedin,
         { url: TEST_URL, title: TEST_TITLE }
       )
@@ -79,7 +79,7 @@ describe('NgSocialLinksService [no default configuration]', () => {
     );
 
     expect(
-      service.getSocialLink(
+      service.getShareLink(
         Providers.mailto,
         { url: TEST_URL, title: TEST_TITLE, description: TEST_DESCRIPTION }
       )
@@ -110,26 +110,26 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should use current default share link provided in module configuration', () => {
     expect(
-      service.getSocialLink(Providers.facebook)
+      service.getShareLink(Providers.facebook)
     ).toEqual(
       `${ProfilerUrls.facebook}?u=${encodeURIComponent(DEFAULT_URL)}`
     );
 
     expect(
-      service.getSocialLink(Providers.twitter)
+      service.getShareLink(Providers.twitter)
     ).toEqual(
       `${ProfilerUrls.twitter}?url=${encodeURIComponent(DEFAULT_URL)}&text=${encodeURIComponent(DEFAULT_TITLE)}`
     );
 
     expect(
-      service.getSocialLink(Providers.linkedin)
+      service.getShareLink(Providers.linkedin)
     ).toEqual(
       ProfilerUrls.linkedin +
         `?url=${encodeURIComponent(DEFAULT_URL)}/&summary=${encodeURIComponent(DEFAULT_TITLE)}`
     );
 
     expect(
-      service.getSocialLink(Providers.mailto)
+      service.getShareLink(Providers.mailto)
     ).toEqual(
       ProfilerUrls.mailto +
       `?subject=${encodeURIComponent(DEFAULT_TITLE)}` +
@@ -139,13 +139,13 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink(Providers.facebook, { url: TEST_URL })
+      service.getShareLink(Providers.facebook, { url: TEST_URL })
     ).toEqual(
       `${ProfilerUrls.facebook}?u=${encodeURIComponent(TEST_URL)}`
     );
 
     expect(
-      service.getSocialLink(
+      service.getShareLink(
         Providers.twitter,
         { url: TEST_URL, title: TEST_TITLE }
       )
@@ -155,7 +155,7 @@ describe('NgSocialLinksService [specific default configuration]', () => {
     );
 
     expect(
-      service.getSocialLink(
+      service.getShareLink(
         Providers.linkedin,
         { url: TEST_URL, title: TEST_TITLE }
       )
@@ -165,7 +165,7 @@ describe('NgSocialLinksService [specific default configuration]', () => {
     );
 
     expect(
-      service.getSocialLink(
+      service.getShareLink(
         Providers.mailto,
         { url: TEST_URL, title: TEST_TITLE, description: TEST_DESCRIPTION }
       )
