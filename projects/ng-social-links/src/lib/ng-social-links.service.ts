@@ -6,12 +6,7 @@ import {
   NgSocialLinksProvider,
   NgSocialLinksProviderConfig as Config
 } from '././ng-social-links.types';
-import {
-  FACEBOOK,
-  TWITTER,
-  LINKEDIN,
-  MAILTO
-} from './ng-social-links.constants';
+import { Providers } from './ng-social-links.constants';
 import * as utils from './ng-social-links.utils';
 
 @Injectable({
@@ -23,17 +18,23 @@ export class NgSocialLinksService {
     @Inject(DEFAULT_SHARE_URL_CONFIG_TOKEN) private defaultConfig: Config
   ) {}
 
-  getSocialLink(provider: typeof FACEBOOK, config?: Pick<Config, 'url'>): string;
+  /**
+   * Provides social share URL for a given provider.
+   * Addional configuration parameters depend on a chosen provider.
+   * @param provider Provider name.
+   * @param config Parameters used to build a social share URL.
+   */
+  getSocialLink(provider: typeof Providers.facebook, config?: Pick<Config, 'url'>): string;
   getSocialLink(
-    provider: typeof TWITTER | typeof LINKEDIN,
-    config?: Pick<Config, 'url' | 'text'>
+    provider: typeof Providers.twitter | typeof Providers.linkedin,
+    config?: Pick<Config, 'url' | 'title'>
   ): string;
-  getSocialLink(provider: typeof MAILTO, config?: Config): string;
+  getSocialLink(provider: typeof Providers.mailto, config?: Config): string;
   getSocialLink(provider: NgSocialLinksProvider, config?: Partial<Config>): string {
-    const url = config?.url || this.defaultConfig.url || this.document.location.href;
-    const text = config?.text || this.defaultConfig.text;
-    const body = config?.body || this.defaultConfig.body;
+    const url = config?.url || this.defaultConfig.url || this.document.location.origin;
+    const title = config?.title || this.defaultConfig.title;
+    const description = config?.description || this.defaultConfig.description;
 
-    return utils.getSocialLink(provider, { url, text, body });
+    return utils.getSocialLink(provider, { url, title, description });
   }
 }

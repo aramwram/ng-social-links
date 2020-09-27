@@ -2,39 +2,56 @@ import {
   NgSocialLinksProvider,
   NgSocialLinksProviderConfig as Config
 } from '././ng-social-links.types';
-import {
-  FACEBOOK,
-  TWITTER,
-  LINKEDIN,
-  MAILTO
-} from './ng-social-links.constants';
+import { Providers, ProfilerUrls } from './ng-social-links.constants';
 
+/**
+ * Provides social share URL for a given provider.
+ * @param provider Provider name.
+ * @param config Parameters used to build a social share URL.
+ */
 export function getSocialLink(provider: NgSocialLinksProvider, config: Partial<Config>): string {
-  const { url, text, body } = config;
+  let { url, title, description } = config;
 
   if (!url) {
     throw new Error('Mandatory parameter is missing: url.');
   }
 
+  url = encodeURIComponent(url);
+
+  if (title) {
+    title = encodeURIComponent(title);
+  }
+
+  if (description) {
+    description = encodeURIComponent(description);
+  }
+
   switch (provider) {
-    case FACEBOOK:
-      return 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+    case Providers.facebook:
+      return ProfilerUrls.facebook + '?u=' + url;
 
-    case TWITTER:
-      return 'https://twitter.com/intent/tweet?url=' + url + (text ? '&text=' + text : '');
+    case Providers.twitter:
+      return ProfilerUrls.twitter + '?url=' + url + (title ? '&text=' + title : '');
 
-    case LINKEDIN:
-      return 'https://www.linkedin.com/sharing/share-offsite/?url=' + url + (text ? '/&summary=' + text : '');
+    case Providers.linkedin:
+      return ProfilerUrls.linkedin + '?url='
+        + url
+        + (title ? '/&summary=' + title : '');
 
-    case MAILTO:
+    case Providers.mailto:
       return (
-        'mailto:' +
-        (text ? '?subject=' + text : '') +
-        (text ? '&body=' : '?body=') +
-        (body ? body : '') +
+        ProfilerUrls.mailto +
+        (title ? '?subject=' + title : '') +
+        (title ? '&body=' : '?body=') +
+        (description ? description : '') +
         ' ' +
         url
       );
+
+    // case Providers.linkedin:
+    //   return 'https://vk.com/share.php?url={0}&title={1}'
+    //     + url
+    //     + (title ? '/&summary=' + title : '');
 
     default:
       throw new Error(`Unknown social share provider: ${provider}`);

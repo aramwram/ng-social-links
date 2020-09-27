@@ -23,14 +23,14 @@ export class AppComponent implements OnDestroy {
   readonly faEnvelope = faEnvelope;
 
   readonly defaultShareUrl = this.document.location.href;
-  readonly defaultShareText = SOCIAL_SHARE_CONFIG.text;
-  readonly defaultShareEmailBody = SOCIAL_SHARE_CONFIG.body;
+  readonly defaultShareText = SOCIAL_SHARE_CONFIG.title;
+  readonly defaultShareEmailBody = SOCIAL_SHARE_CONFIG.description;
 
   readonly form = this.fb.group({
     iconSet: ['fontawesome'], // or 'material'
     url: [GITHUB_LIB_URL],
-    text: [''],
-    body: ['']
+    title: [''],
+    description: ['']
   });
 
   readonly iconSetOptions = [
@@ -53,7 +53,9 @@ export class AppComponent implements OnDestroy {
       this.form.valueChanges.pipe(
         throttleTime(500)
       ).subscribe(
-        value => this.setSocialLinks((({ link, text, body }) => ({ link, text, body }))(value))
+        value => this.setSocialLinks(
+          (({ url, title, description }) => ({ url, title, description }))(value)
+        )
       )
     );
   }
@@ -62,7 +64,7 @@ export class AppComponent implements OnDestroy {
     this.sub.unsubscribe();
   }
 
-  private setSocialLinks(config?: { url?: string; text?: string; body?: string; }): void {
+  private setSocialLinks(config?: { url?: string; title?: string; description?: string; }): void {
     this.socialLinks = [
       'fb',
       'tw',

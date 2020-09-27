@@ -2,18 +2,15 @@ import { TestBed } from '@angular/core/testing';
 
 import { NgSocialLinksService } from './ng-social-links.service';
 import { DEFAULT_SHARE_URL_CONFIG_TOKEN } from './ng-social-links.tokens';
-import {
-  FACEBOOK,
-  TWITTER,
-  LINKEDIN,
-  MAILTO
-} from './ng-social-links.constants';
+import { Providers, ProfilerUrls } from './ng-social-links.constants';
 
 const LOCAL_URL = 'http://localhost:9876';
 const DEFAULT_URL = 'http://default-domain.com';
 const TEST_URL = 'http://test-domain.com';
-const TEST_TEXT = 'Test text';
-const TEST_BODY = 'Test body';
+const DEFAULT_TITLE = 'Default title';
+const DEFAULT_DESCRIPTION = 'Default description';
+const TEST_TITLE = 'Test title';
+const TEST_DESCRIPTION = 'Test description';
 
 describe('NgSocialLinksService [no default configuration]', () => {
   let service: NgSocialLinksService;
@@ -31,62 +28,65 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should use current localtion as a share link', () => {
     expect(
-      service.getSocialLink(FACEBOOK)
+      service.getSocialLink(Providers.facebook)
     ).toEqual(
-      `https://www.facebook.com/sharer/sharer.php?u=${LOCAL_URL}/context.html`
+      `${ProfilerUrls.facebook}?u=${encodeURIComponent(LOCAL_URL)}`
     );
 
     expect(
-      service.getSocialLink(TWITTER)
+      service.getSocialLink(Providers.twitter)
     ).toEqual(
-      `https://twitter.com/intent/tweet?url=${LOCAL_URL}/context.html`
+      `${ProfilerUrls.twitter}?url=${encodeURIComponent(LOCAL_URL)}`
     );
 
     expect(
-      service.getSocialLink(LINKEDIN)
+      service.getSocialLink(Providers.linkedin)
     ).toEqual(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${LOCAL_URL}/context.html`
+      `${ProfilerUrls.linkedin}?url=${encodeURIComponent(LOCAL_URL)}`
     );
 
     expect(
-      service.getSocialLink(MAILTO)
+      service.getSocialLink(Providers.mailto)
     ).toEqual(
-      `mailto:?body= ${LOCAL_URL}/context.html`
+      `${ProfilerUrls.mailto}?body= ${encodeURIComponent(LOCAL_URL)}`
     );
   });
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink(FACEBOOK, { url: TEST_URL })
+      service.getSocialLink(Providers.facebook, { url: TEST_URL })
     ).toEqual(
-      `https://www.facebook.com/sharer/sharer.php?u=${TEST_URL}`
+      `${ProfilerUrls.facebook}?u=${encodeURIComponent(TEST_URL)}`
     );
 
     expect(
       service.getSocialLink(
-        TWITTER,
-        { url: TEST_URL, text: TEST_TEXT }
+        Providers.twitter,
+        { url: TEST_URL, title: TEST_TITLE }
       )
     ).toEqual(
-      `https://twitter.com/intent/tweet?url=${TEST_URL}&text=${TEST_TEXT}`
+      `${ProfilerUrls.twitter}?url=${encodeURIComponent(TEST_URL)}&text=${encodeURIComponent(TEST_TITLE)}`
     );
 
     expect(
       service.getSocialLink(
-        LINKEDIN,
-        { url: TEST_URL, text: TEST_TEXT }
+        Providers.linkedin,
+        { url: TEST_URL, title: TEST_TITLE }
       )
     ).toEqual(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${TEST_URL}/&summary=${TEST_TEXT}`
+      ProfilerUrls.linkedin +
+        `?url=${encodeURIComponent(TEST_URL)}/&summary=${encodeURIComponent(TEST_TITLE)}`
     );
 
     expect(
       service.getSocialLink(
-        MAILTO,
-        { url: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
+        Providers.mailto,
+        { url: TEST_URL, title: TEST_TITLE, description: TEST_DESCRIPTION }
       )
     ).toEqual(
-      `mailto:?subject=${TEST_TEXT}&body=${TEST_BODY} ${TEST_URL}`
+      ProfilerUrls.mailto +
+      `?subject=${encodeURIComponent(TEST_TITLE)}` +
+      `&body=${encodeURIComponent(TEST_DESCRIPTION)} ${encodeURIComponent(TEST_URL)}`
     );
   });
 });
@@ -98,7 +98,7 @@ describe('NgSocialLinksService [specific default configuration]', () => {
     TestBed.configureTestingModule({
       providers: [{
         provide: DEFAULT_SHARE_URL_CONFIG_TOKEN,
-        useValue: { url: DEFAULT_URL, text: 'Default text', body: 'Default body' }
+        useValue: { url: DEFAULT_URL, title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION }
       }]
     });
     service = TestBed.inject(NgSocialLinksService);
@@ -110,62 +110,69 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should use current default share link provided in module configuration', () => {
     expect(
-      service.getSocialLink(FACEBOOK)
+      service.getSocialLink(Providers.facebook)
     ).toEqual(
-      `https://www.facebook.com/sharer/sharer.php?u=${DEFAULT_URL}`
+      `${ProfilerUrls.facebook}?u=${encodeURIComponent(DEFAULT_URL)}`
     );
 
     expect(
-      service.getSocialLink(TWITTER)
+      service.getSocialLink(Providers.twitter)
     ).toEqual(
-      `https://twitter.com/intent/tweet?url=${DEFAULT_URL}&text=Default text`
+      `${ProfilerUrls.twitter}?url=${encodeURIComponent(DEFAULT_URL)}&text=${encodeURIComponent(DEFAULT_TITLE)}`
     );
 
     expect(
-      service.getSocialLink(LINKEDIN)
+      service.getSocialLink(Providers.linkedin)
     ).toEqual(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${DEFAULT_URL}/&summary=Default text`
+      ProfilerUrls.linkedin +
+        `?url=${encodeURIComponent(DEFAULT_URL)}/&summary=${encodeURIComponent(DEFAULT_TITLE)}`
     );
 
     expect(
-      service.getSocialLink(MAILTO)
+      service.getSocialLink(Providers.mailto)
     ).toEqual(
-      `mailto:?subject=Default text&body=Default body ${DEFAULT_URL}`
+      ProfilerUrls.mailto +
+      `?subject=${encodeURIComponent(DEFAULT_TITLE)}` +
+      `&body=${encodeURIComponent(DEFAULT_DESCRIPTION)} ${encodeURIComponent(DEFAULT_URL)}`
     );
   });
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink(FACEBOOK, { url: TEST_URL })
+      service.getSocialLink(Providers.facebook, { url: TEST_URL })
     ).toEqual(
-      `https://www.facebook.com/sharer/sharer.php?u=${TEST_URL}`
+      `${ProfilerUrls.facebook}?u=${encodeURIComponent(TEST_URL)}`
     );
 
     expect(
       service.getSocialLink(
-        TWITTER,
-        { url: TEST_URL, text: TEST_TEXT }
+        Providers.twitter,
+        { url: TEST_URL, title: TEST_TITLE }
       )
     ).toEqual(
-      `https://twitter.com/intent/tweet?url=${TEST_URL}&text=${TEST_TEXT}`
+      ProfilerUrls.twitter +
+      `?url=${encodeURIComponent(TEST_URL)}&text=${encodeURIComponent(TEST_TITLE)}`
     );
 
     expect(
       service.getSocialLink(
-        LINKEDIN,
-        { url: TEST_URL, text: TEST_TEXT }
+        Providers.linkedin,
+        { url: TEST_URL, title: TEST_TITLE }
       )
     ).toEqual(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${TEST_URL}/&summary=${TEST_TEXT}`
+      ProfilerUrls.linkedin +
+        `?url=${encodeURIComponent(TEST_URL)}/&summary=${encodeURIComponent(TEST_TITLE)}`
     );
 
     expect(
       service.getSocialLink(
-        MAILTO,
-        { url: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
+        Providers.mailto,
+        { url: TEST_URL, title: TEST_TITLE, description: TEST_DESCRIPTION }
       )
     ).toEqual(
-      `mailto:?subject=${TEST_TEXT}&body=${TEST_BODY} ${TEST_URL}`
+      ProfilerUrls.mailto +
+      `?subject=${encodeURIComponent(TEST_TITLE)}` +
+      `&body=${encodeURIComponent(TEST_DESCRIPTION)} ${encodeURIComponent(TEST_URL)}`
     );
   });
 });
