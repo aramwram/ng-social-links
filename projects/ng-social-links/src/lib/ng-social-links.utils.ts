@@ -28,15 +28,46 @@ export function getSocialLink(provider: NgSocialLinksProvider, config: Partial<C
 
   switch (provider) {
     case Providers.facebook:
-      return ProfilerUrls.facebook + '?u=' + url;
+      return `${ProfilerUrls.facebook}?u=${url}`;
 
     case Providers.twitter:
-      return ProfilerUrls.twitter + '?url=' + url + (title ? '&text=' + title : '');
+      return `${ProfilerUrls.twitter}?url=${url}` + (title ? `&text=${title}` : '');
 
     case Providers.linkedin:
-      return ProfilerUrls.linkedin + '?url='
-        + url
-        + (title ? '/&summary=' + title : '');
+      return `${ProfilerUrls.linkedin}?url=${url}` + (title ? '/&summary=' + title : '');
+
+    case Providers.vkontakte:
+      return `${ProfilerUrls.vkontakte}?url=${url}` + (title ? `&title=${title}` : '');
+
+    case Providers.telegram:
+      return `${ProfilerUrls.telegram}?url=${url}` + (title ? `&text=${title}` : '');
+
+    case Providers.getpocket:
+      return `${ProfilerUrls.getpocket}?url=${url}` + (title ? `&title=${title}` : '');
+
+    case Providers.reddit:
+      return `${ProfilerUrls.reddit}?url=${url}`;
+
+    case Providers.evernote:
+      return `${ProfilerUrls.evernote}?url=${url}` + (title ? `&t=${title}` : '');
+
+    case Providers.pinterest:
+      return `${ProfilerUrls.pinterest}?url=${url}&media=${url}` +
+        (title ? `&description=${title}` : '');
+
+    case Providers.skype:
+      return `${ProfilerUrls.skype}?url=${url}&source=button` + (title ? `&text=${title}` : '');
+
+    case Providers.whatsapp:
+      return `${ProfilerUrls.whatsapp}?text=${url}%20` + (title || '');
+
+    case Providers.connectOk:
+      const shareUrlParam = 'st.cmd=WidgetSharePreview&service=odnoklassniki&st.shareUrl';
+
+      return `${ProfilerUrls.connectOk}?${shareUrlParam}=${url}`;
+
+    case Providers.xing:
+      return `${ProfilerUrls.xing}?op=share;url=${url}` + (title ? `;title=${title}` : '');
 
     case Providers.mailto:
       return (
@@ -47,11 +78,6 @@ export function getSocialLink(provider: NgSocialLinksProvider, config: Partial<C
         ' ' +
         url
       );
-
-    // case Providers.linkedin:
-    //   return 'https://vk.com/share.php?url={0}&title={1}'
-    //     + url
-    //     + (title ? '/&summary=' + title : '');
 
     default:
       throw new Error(`Unknown social share provider: ${provider}`);

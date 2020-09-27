@@ -1,7 +1,20 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
-import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import {
+  faFacebook,
+  faTwitter,
+  faLinkedin,
+  faVk,
+  faTelegram,
+  faGetPocket,
+  faReddit,
+  faEvernote,
+  faPinterest,
+  faSkype,
+  faWhatsapp,
+  faXing
+} from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
@@ -17,28 +30,33 @@ const GITHUB_LIB_URL = 'https://github.com/aramwram/ng-social-links';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnDestroy {
-  readonly faFacebook = faFacebook;
-  readonly faTwitter = faTwitter;
-  readonly faLinkedin = faLinkedin;
-  readonly faEnvelope = faEnvelope;
+  readonly faIcons = {
+    fb: faFacebook,
+    tw: faTwitter,
+    in: faLinkedin,
+    mail: faEnvelope,
+    vk: faVk,
+    tg: faTelegram,
+    pocket: faGetPocket,
+    re: faReddit,
+    ev: faEvernote,
+    pi: faPinterest,
+    sk: faSkype,
+    wa: faWhatsapp,
+    xi: faXing
+  };
 
   readonly defaultShareUrl = this.document.location.href;
   readonly defaultShareText = SOCIAL_SHARE_CONFIG.title;
   readonly defaultShareEmailBody = SOCIAL_SHARE_CONFIG.description;
 
   readonly form = this.fb.group({
-    iconSet: ['fontawesome'], // or 'material'
     url: [GITHUB_LIB_URL],
     title: [''],
     description: ['']
   });
 
-  readonly iconSetOptions = [
-    { label: 'Fontawesome', value: 'fontawesome' },
-    { label: 'Material Icons', value: 'material' }
-  ];
-
-  socialLinks: { [key: string]: string };
+  socialLinks: { url: string; icon: string; }[];
 
   private readonly sub = new Subscription();
 
@@ -69,12 +87,21 @@ export class AppComponent implements OnDestroy {
       'fb',
       'tw',
       'in',
-      'mail'
-    ].reduce(
-      (acc, provider) => {
-        return { ...acc, [provider]: this.socialLinksSvc.getSocialLink(provider as any, config) };
-      },
-      {}
+      'mail',
+      'vk',
+      'tg',
+      'pocket',
+      're',
+      'ev',
+      'pi',
+      'sk',
+      'wa',
+      'xi'
+    ].map(
+      provider => ({
+        url: this.socialLinksSvc.getSocialLink(provider as any, config),
+        icon: this.faIcons[provider]
+      })
     );
   }
 }

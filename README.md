@@ -37,7 +37,7 @@ class SomeComponent {
   constructor(private socialLinks: NgSocialLinksService) {}
 }
 ````
-Get the socail share link:
+Get the socail share links:
 ```js
 facebookShareLink = this.socialLinks.getSocialLink('fa');
 ```
@@ -83,8 +83,18 @@ Currently, demo is only available on localhost:
 # Supported providers
 * 'fb' - Facebook
 * 'tw' - Twitter
-* 'li' - LinkedIn
-* 'mt' - Mailto
+* 'in' - LinkedIn
+* 'mail' - Mailto
+* 'vk' - Vkontakte
+* 'tg' - Telegram
+* 'pocket' - Getpocket
+* 'reddit' - Reddit
+* 'ev' - Evernote
+* 'pi' - Pinterest
+* 'sk' - Skype
+* 'wa' - Whatsapp
+* 'ok' - connect.ok
+* 'xi' - Xing
 
 # Contributig to ng-social-links
-You more than welcome to improve this library (for example, add missing social share providers) or create issues on the GitHub issue tracker.
+You are more than welcome to improve this library (for example, add missing social share providers) or create issues on the GitHub issue tracker.

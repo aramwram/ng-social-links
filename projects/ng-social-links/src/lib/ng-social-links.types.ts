@@ -14,8 +14,6 @@ export type NgSocialLinksProvider =
   typeof Providers.skype       |
   typeof Providers.whatsapp    |
   typeof Providers.connectOk   |
-  typeof Providers.tumblr      |
-  typeof Providers.ycombinator |
   typeof Providers.xing;
 
 export interface NgSocialLinksProviderConfig {

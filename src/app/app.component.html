@@ -5,15 +5,6 @@
     </mat-card-header>
 
     <mat-card-content class="form-fields-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Icon set</mat-label>
-        <mat-select formControlName="iconSet">
-          <mat-option *ngFor="let option of iconSetOptions" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
       <mat-form-field>
         <mat-label>Share URL</mat-label>
         <input matInput type="text" formControlName="url" >
@@ -49,34 +40,12 @@
       <mat-card-title>Results</mat-card-title>
     </mat-card-header>
 
-    <mat-card-content *ngIf="form.get('iconSet').value as iconSet">
-      <ng-container *ngIf="iconSet === 'fontawesome'; else matIconsTmpl">
-        <a [attr.href]="socialLinks['fb']">
-          <fa-icon [icon]="faFacebook"></fa-icon>
+    <mat-card-content>
+      <div *ngFor="let link of socialLinks" class="icon-container">
+        <a [attr.href]="link.url" target="_blank">
+          <fa-icon [icon]="link.icon"></fa-icon>
         </a>
-
-        <a [attr.href]="socialLinks['tw']">
-          <fa-icon [icon]="faTwitter"></fa-icon>
-        </a>
-
-        <a [attr.href]="socialLinks['li']">
-          <fa-icon [icon]="faLinkedin"></fa-icon>
-        </a>
-
-        <a [attr.href]="socialLinks['mt']">
-          <fa-icon [icon]="faEnvelope"></fa-icon>
-        </a>
-      </ng-container>
-
-      <ng-template #matIconsTmpl>
-        <a [attr.href]="socialLinks['fb']">
-          <mat-icon>facebook</mat-icon>
-        </a>
-
-        <a [attr.href]="socialLinks['mt']">
-          <mat-icon>email</mat-icon>
-        </a>
-      </ng-template>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

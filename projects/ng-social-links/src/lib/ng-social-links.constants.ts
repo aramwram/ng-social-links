@@ -12,8 +12,6 @@ export class Providers {
   static readonly skype = 'sk';
   static readonly whatsapp = 'wa';
   static readonly connectOk = 'ok';
-  static readonly tumblr = 'tu';
-  static readonly ycombinator = 'yc';
   static readonly xing = 'xi';
 }
 
@@ -31,7 +29,5 @@ export class ProfilerUrls {
   static readonly skype = 'https://web.skype.com/share';
   static readonly whatsapp = 'whatsapp://send';
   static readonly connectOk = 'https://connect.ok.ru/dk';
-  static readonly tumblr = 'https://www.tumblr.com/widgets/share/tool';
-  static readonly ycombinator = 'https://news.ycombinator.com/submitlink';
   static readonly xing = 'https://www.xing.com/app/user';
 }

@@ -24,9 +24,25 @@ export class NgSocialLinksService {
    * @param provider Provider name.
    * @param config Parameters used to build a social share URL.
    */
-  getSocialLink(provider: typeof Providers.facebook, config?: Pick<Config, 'url'>): string;
   getSocialLink(
-    provider: typeof Providers.twitter | typeof Providers.linkedin,
+    provider:
+      typeof Providers.facebook  |
+      typeof Providers.reddit    |
+      typeof Providers.connectOk,
+    config?: Pick<Config, 'url'>
+  ): string;
+  getSocialLink(
+    provider:
+      typeof Providers.twitter   |
+      typeof Providers.linkedin  |
+      typeof Providers.vkontakte |
+      typeof Providers.telegram  |
+      typeof Providers.getpocket |
+      typeof Providers.evernote  |
+      typeof Providers.pinterest |
+      typeof Providers.skype     |
+      typeof Providers.whatsapp  |
+      typeof Providers.xing,
     config?: Pick<Config, 'url' | 'title'>
   ): string;
   getSocialLink(provider: typeof Providers.mailto, config?: Config): string;
