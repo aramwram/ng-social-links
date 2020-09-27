@@ -1,6 +1,6 @@
 {
   "name": "ng-social-links",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Headless social share for Angular",
   "author": "Aram Khachatrian",
   "repository": {
@@ -10,8 +10,16 @@
   "bugs": "https://github.com/aramwram/ng-social-links/issues",
   "homepage": "https://github.com/aramwram/ng-social-links",
   "keywords": [
-    "Angular",
-    "Social share"
+    "angular",
+    "social",
+    "share",
+    "links",
+    "facebook",
+    "telegram",
+    "vk",
+    "twitter",
+    "whatsapp",
+    "skype"
   ],
   "license": "MIT",
   "peerDependencies": {
