@@ -1,8 +1,15 @@
+import {
+  FACEBOOK,
+  TWITTER,
+  LINKEDIN,
+  MAILTO
+} from './ng-social-links.constants';
+
 export type NgSocialLinksProvider =
-  'fb' | // Facebook
-  'tw' | // Twitter
-  'li' | // Linkedin
-  'mt';  // Mailto
+  typeof FACEBOOK  |
+  typeof TWITTER   |
+  typeof LINKEDIN  |
+  typeof MAILTO;
 
 export interface NgSocialLinksProviderConfig {
   url?: string;

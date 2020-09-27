@@ -2,6 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { NgSocialLinksService } from './ng-social-links.service';
 import { DEFAULT_SHARE_URL_CONFIG_TOKEN } from './ng-social-links.tokens';
+import {
+  FACEBOOK,
+  TWITTER,
+  LINKEDIN,
+  MAILTO
+} from './ng-social-links.constants';
 
 const LOCAL_URL = 'http://localhost:9876';
 const DEFAULT_URL = 'http://default-domain.com';
@@ -25,25 +31,25 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should use current localtion as a share link', () => {
     expect(
-      service.getSocialLink('fb')
+      service.getSocialLink(FACEBOOK)
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${LOCAL_URL}/context.html`
     );
 
     expect(
-      service.getSocialLink('tw')
+      service.getSocialLink(TWITTER)
     ).toEqual(
       `https://twitter.com/intent/tweet?url=${LOCAL_URL}/context.html`
     );
 
     expect(
-      service.getSocialLink('li')
+      service.getSocialLink(LINKEDIN)
     ).toEqual(
       `https://www.linkedin.com/sharing/share-offsite/?url=${LOCAL_URL}/context.html`
     );
 
     expect(
-      service.getSocialLink('mt')
+      service.getSocialLink(MAILTO)
     ).toEqual(
       `mailto:?body= ${LOCAL_URL}/context.html`
     );
@@ -51,14 +57,14 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink('fb', { url: TEST_URL })
+      service.getSocialLink(FACEBOOK, { url: TEST_URL })
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${TEST_URL}`
     );
 
     expect(
       service.getSocialLink(
-        'tw',
+        TWITTER,
         { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
@@ -67,7 +73,7 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        'li',
+        LINKEDIN,
         { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
@@ -76,7 +82,7 @@ describe('NgSocialLinksService [no default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        'mt',
+        MAILTO,
         { url: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
       )
     ).toEqual(
@@ -104,25 +110,25 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should use current default share link provided in module configuration', () => {
     expect(
-      service.getSocialLink('fb')
+      service.getSocialLink(FACEBOOK)
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${DEFAULT_URL}`
     );
 
     expect(
-      service.getSocialLink('tw')
+      service.getSocialLink(TWITTER)
     ).toEqual(
       `https://twitter.com/intent/tweet?url=${DEFAULT_URL}&text=Default text`
     );
 
     expect(
-      service.getSocialLink('li')
+      service.getSocialLink(LINKEDIN)
     ).toEqual(
       `https://www.linkedin.com/sharing/share-offsite/?url=${DEFAULT_URL}/&summary=Default text`
     );
 
     expect(
-      service.getSocialLink('mt')
+      service.getSocialLink(MAILTO)
     ).toEqual(
       `mailto:?subject=Default text&body=Default body ${DEFAULT_URL}`
     );
@@ -130,14 +136,14 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
   it('should apply provided parameters', () => {
     expect(
-      service.getSocialLink('fb', { url: TEST_URL })
+      service.getSocialLink(FACEBOOK, { url: TEST_URL })
     ).toEqual(
       `https://www.facebook.com/sharer/sharer.php?u=${TEST_URL}`
     );
 
     expect(
       service.getSocialLink(
-        'tw',
+        TWITTER,
         { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
@@ -146,7 +152,7 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        'li',
+        LINKEDIN,
         { url: TEST_URL, text: TEST_TEXT }
       )
     ).toEqual(
@@ -155,7 +161,7 @@ describe('NgSocialLinksService [specific default configuration]', () => {
 
     expect(
       service.getSocialLink(
-        'mt',
+        MAILTO,
         { url: TEST_URL, text: TEST_TEXT, body: TEST_BODY }
       )
     ).toEqual(

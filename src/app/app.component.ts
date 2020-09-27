@@ -66,8 +66,8 @@ export class AppComponent implements OnDestroy {
     this.socialLinks = [
       'fb',
       'tw',
-      'li',
-      'mt'
+      'in',
+      'mail'
     ].reduce(
       (acc, provider) => {
         return { ...acc, [provider]: this.socialLinksSvc.getSocialLink(provider as any, config) };
