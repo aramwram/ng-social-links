@@ -7,7 +7,7 @@ Headless social share for Angular. Provides straightforward API for getting soci
 
 ng-social-links advantages:
  * Native to Angular.
- * Configurable - you can globally define share URL, text and email body at module import.
+ * Configurable - you can globally define share URL, title and email body at module import.
  * Well typed - it's clear which parameters are relevant to every social share provider.
  * Works well in SSR mode.
 
@@ -43,7 +43,7 @@ facebookShareLink = this.socialLinks.getShareLink('fa');
 ```
 With additional parameters:
 ```js
-twitterShareLink = this.socialLinks.getShareLink('tw', { text: 'Visit my website!' });
+twitterShareLink = this.socialLinks.getShareLink('tw', { title: 'Visit my website!' });
 ```
 
 ## Configuration
@@ -51,11 +51,11 @@ The configuration interface looks like this:
 ```js
 interface Config {
   url?: string;
-  text?: string;
-  body?: string;
+  title?: string;
+  description?: string;
 }
 ```
-By default `document.location.href` is used for `url`, `text` and `body` are empty.
+By default `document.location.href` is used for `url`, `title` and `description` are empty.
 
 You can define another defaults as follows:
 ```js
@@ -63,7 +63,7 @@ NgSocialLinksModule.forRoot({ url: 'htts://my-website.com' })
 ```
 Or
 ```js
-NgSocialLinksModule.forRoot({ text: 'Visit my website!', body: 'Default email body...' })
+NgSocialLinksModule.forRoot({ title: 'Visit my website!', description: 'Default email body...' })
 ```
 
 ng-social-links is headless, so you're free to use whatever you like in a template. e.g. text links, icons, buttons, you name it. For example:
